@@ -43,6 +43,32 @@ namespace BeatmapExporterCLI.Interface
         }
 
         /// <summary>
+        /// Dont ask anything and just do usual work with current configuration.
+        /// </summary>
+        public void DoExport()
+        {
+            switch (Configuration.ExportFormat)
+            {
+                case ExportFormat.Beatmap:
+                case ExportFormat.Folder:
+                    CLI.ExportBeatmaps();
+                    break;
+                case ExportFormat.Audio:
+                    CLI.ExportAudioFiles();
+                    break;
+                case ExportFormat.Background:
+                    CLI.ExportBackgroundFiles();
+                    break;
+                case ExportFormat.Replay:
+                    CLI.ExportReplays();
+                    break;
+                case ExportFormat.CollectionDb:
+                    CLI.ExportCollectionDb();
+                    break;
+            }
+        }
+
+        /// <summary>
         /// Exits the program after blocking for user acknowledgement. 
         /// </summary>
         [DoesNotReturn]
@@ -53,7 +79,7 @@ namespace BeatmapExporterCLI.Interface
             Console.ReadKey();
             Environment.Exit(0);
         }
-
+        
         /// <summary>
         /// Primary CLI user interaction flow.
         /// </summary>
@@ -80,25 +106,7 @@ namespace BeatmapExporterCLI.Interface
                     Environment.Exit(0);
                     break;
                 case 1:
-                    switch (Configuration.ExportFormat)
-                    {
-                        case ExportFormat.Beatmap:
-                        case ExportFormat.Folder:
-                            CLI.ExportBeatmaps();
-                            break;
-                        case ExportFormat.Audio:
-                            CLI.ExportAudioFiles();
-                            break;
-                        case ExportFormat.Background:
-                            CLI.ExportBackgroundFiles();
-                            break;
-                        case ExportFormat.Replay:
-                            CLI.ExportReplays();
-                            break;
-                        case ExportFormat.CollectionDb:
-                            CLI.ExportCollectionDb();
-                            break;
-                    }
+                    DoExport();
                     break;
                 case 2:
                     CLI.DisplaySelectedBeatmaps();

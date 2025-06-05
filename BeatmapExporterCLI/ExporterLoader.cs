@@ -1,6 +1,5 @@
-﻿using BeatmapExporterCLI.Data;
-using BeatmapExporterCLI.Interface;
-using BeatmapExporterCore.Utilities;
+﻿using BeatmapExporterCore.Utilities;
+using ConsoleAppFramework;
 
 namespace BeatmapExporterCLI
 {
@@ -15,13 +14,8 @@ namespace BeatmapExporterCLI
             {
                 Console.WriteLine($"UPDATE AVAILABLE for BeatmapExporter: ({update.Value.Current} -> {update.Value.New})\n{ExporterUpdater.Latest}\n");
             }
-
-            // currently only load lazer, can add interface for selecting osu stable here later
-            ExporterApp exporter = LazerLoader.Load(args.FirstOrDefault());
-
-            exporter.StartApplicationLoop();
-
-            ExporterApp.Exit();
+            
+            ConsoleApp.Run(args, Commands.Do);
         }
     }
 }
