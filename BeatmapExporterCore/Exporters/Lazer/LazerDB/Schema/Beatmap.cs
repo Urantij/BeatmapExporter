@@ -1,7 +1,10 @@
-﻿using Realms;
+﻿using System.Text.Json.Serialization;
+using Realms;
 
 namespace BeatmapExporterCore.Exporters.Lazer.LazerDB.Schema
 {
+    // https://github.com/ppy/osu/blob/master/osu.Game/Beatmaps/BeatmapInfo.cs
+
     // Original source file (modified by kabii) Copyright (c) ppy Pty Ltd <contact@ppy.sh>. Licensed under the MIT Licence.
     public class Beatmap : RealmObject
     {
@@ -21,6 +24,7 @@ namespace BeatmapExporterCore.Exporters.Lazer.LazerDB.Schema
 
         public BeatmapUserSettings UserSettings { get; set; } = null!;
 
+        [JsonIgnore]
         public BeatmapSet? BeatmapSet { get; set; }
 
         public int Status { get; set; }
@@ -46,6 +50,10 @@ namespace BeatmapExporterCore.Exporters.Lazer.LazerDB.Schema
         public DateTimeOffset? LastOnlineUpdate { get; set; }
 
         public bool Hidden { get; set; }
+
+        public int EndTimeObjectCount { get; set; } = -1;
+
+        public int TotalObjectCount { get; set; } = -1;
 
         public DateTimeOffset? LastPlayed { get; set; }
 

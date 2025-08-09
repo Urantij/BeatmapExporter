@@ -1,4 +1,5 @@
-﻿using BeatmapExporterCore.Utilities;
+﻿using System.Text.Json.Serialization;
+using BeatmapExporterCore.Utilities;
 using Realms;
 
 // Original source file (modified by kabii) Copyright (c) ppy Pty Ltd <contact@ppy.sh>. Licensed under the MIT Licence.
@@ -21,15 +22,16 @@ namespace BeatmapExporterCore.Exporters.Lazer.LazerDB.Schema
         public bool Protected { get; set; }
 
         // Author kabii
+        [JsonIgnore]
         IList<Beatmap>? selected = null; // backing field for SelectedBeatmaps
 
-        [Ignored]
+        [Ignored] [JsonIgnore]
         public string BeatmapID => OnlineID != -1 ? $"{OnlineID} " : "";
 
         /// <summary>
         /// Collection containing only the beatmaps from this set which are currently selected by the user.
         /// </summary>
-        [Ignored]
+        [Ignored] [JsonIgnore]
         public IList<Beatmap> SelectedBeatmaps
         {
             get
@@ -47,20 +49,20 @@ namespace BeatmapExporterCore.Exporters.Lazer.LazerDB.Schema
         /// Collection containing only file hashes of difficulties which are not selected from this beatmap set
         /// For beatmap set export, every arbitrary file in the set, potentially hundreds, is exported except for these difficulty files
         /// </summary>
-        [Ignored]
+        [Ignored] [JsonIgnore]
         public IList<string> ExcludedDiffHashes => Beatmaps
             .Where(b => !SelectedBeatmaps.Contains(b))
             .Select(b => b.Hash)
             .ToList();
 
-        [Ignored]
+        [Ignored] [JsonIgnore]
         public IList<Score> AllScores => Beatmaps.SelectMany(b => b.Scores).ToList();
 
         /// <summary>
         /// The BeatmapMetadata taken from the first diff of this mapset.
         /// Other diffs could contain different metadata - but often we need to identify a mapset as a whole.
         /// </summary>
-        [Ignored]
+        [Ignored] [JsonIgnore]
         public BeatmapMetadata? DiffMetadata => Beatmaps.FirstOrDefault()?.Metadata;
 
         /// <summary>
@@ -76,7 +78,7 @@ namespace BeatmapExporterCore.Exporters.Lazer.LazerDB.Schema
                 $"{OnlineID}: {metadata.Artist} - {metadata.Title} ({metadata.Author.Username} - {difficultySpread} stars)";
         }
 
-        [Ignored]
+        [Ignored] [JsonIgnore]
         public IList<RealmNamedFileUsage> NamedFiles => Files.Where(f => !string.IsNullOrWhiteSpace(f.Filename)).ToList();
 
         /// <summary>

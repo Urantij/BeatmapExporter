@@ -61,11 +61,11 @@ namespace BeatmapExporterCore.Exporters.Lazer.LazerDB
         /// <returns>The Realm instance with the lazer database loaded</returns>
         /// <exception cref="IOException">The database could not be opened</exception>
         /// <exception cref="LazerVersionException">The issue was detected specifically as being a version mismatch and the user should be notified</exception>
-        public Realm Open()
+        public Realm Open(bool @readonly = true)
         {
             RealmConfiguration config = new(database)
             {
-                IsReadOnly = true,
+                IsReadOnly = @readonly,
                 SchemaVersion = LazerSchemaVersion,
                 Schema = new[] {
                     typeof(Beatmap),
