@@ -86,7 +86,7 @@ namespace BeatmapExporterCore.Exporters.Lazer.LazerDB.Schema
         {
             BeatmapMetadata metadata = SelectedBeatmaps.First().Metadata;
 
-            string id = !string.IsNullOrEmpty(BeatmapID) ? BeatmapID : $"_{new Guid("d").ToString()}";
+            string id = !string.IsNullOrEmpty(BeatmapID) ? BeatmapID : $"_{Guid.NewGuid():N}";
 
             return
                 $"{id}{metadata.Artist.Trunc(30)} - {metadata.Title.Trunc(40)} ({metadata.Author.Username.Trunc(30)}).osz"
