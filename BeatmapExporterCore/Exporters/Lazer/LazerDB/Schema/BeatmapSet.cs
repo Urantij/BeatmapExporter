@@ -85,8 +85,11 @@ namespace BeatmapExporterCore.Exporters.Lazer.LazerDB.Schema
         public string ArchiveFilename()
         {
             BeatmapMetadata metadata = SelectedBeatmaps.First().Metadata;
+
+            string id = !string.IsNullOrEmpty(BeatmapID) ? BeatmapID : $"_{new Guid("d").ToString()}";
+
             return
-                $"{BeatmapID}{metadata.Artist.Trunc(30)} - {metadata.Title.Trunc(40)} ({metadata.Author.Username.Trunc(30)}).osz"
+                $"{id}{metadata.Artist.Trunc(30)} - {metadata.Title.Trunc(40)} ({metadata.Author.Username.Trunc(30)}).osz"
                 .RemoveFilenameCharacters();
         }
 
